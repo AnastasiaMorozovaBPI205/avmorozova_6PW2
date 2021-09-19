@@ -12,6 +12,7 @@
 		5D3C851526F71BEE00053971 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3C851426F71BEE00053971 /* ViewController.swift */; };
 		5D3C851A26F71BEF00053971 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D3C851926F71BEF00053971 /* Assets.xcassets */; };
 		5D3C851D26F71BEF00053971 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D3C851B26F71BEF00053971 /* LaunchScreen.storyboard */; };
+		5D3C852526F734FA00053971 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3C852426F734FA00053971 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		5D3C851926F71BEF00053971 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D3C851C26F71BEF00053971 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D3C851E26F71BEF00053971 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D3C852426F734FA00053971 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				5D3C851926F71BEF00053971 /* Assets.xcassets */,
 				5D3C851B26F71BEF00053971 /* LaunchScreen.storyboard */,
 				5D3C851E26F71BEF00053971 /* Info.plist */,
+				5D3C852426F734FA00053971 /* SettingsViewController.swift */,
 			);
 			path = avmorozova_6PW2;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 				5D3C851526F71BEE00053971 /* ViewController.swift in Sources */,
 				5D3C851126F71BEE00053971 /* AppDelegate.swift in Sources */,
 				5D3C851326F71BEE00053971 /* SceneDelegate.swift in Sources */,
+				5D3C852526F734FA00053971 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
