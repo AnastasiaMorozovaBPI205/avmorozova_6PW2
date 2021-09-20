@@ -44,14 +44,10 @@ class ViewController: UIViewController {
                 settingsViewController.settingColorDelegate = changeBackgroundColor
                 settingsViewController.settingLocationDelegate = printLocation
                 
-                let navVC = UINavigationController(rootViewController: settingsViewController)
-                navVC.modalPresentationStyle = .fullScreen
-                present(navVC, animated: true)
-                
-                //navigationController?.pushViewController(
-                //    navVC,
-                //    animated: true
-                //)
+                navigationController?.pushViewController(
+                    settingsViewController,
+                    animated: true
+                )
             case 3:
                 let settingsViewController = SettingsViewController()
                 settingsViewController.settingColorDelegate = changeBackgroundColor
