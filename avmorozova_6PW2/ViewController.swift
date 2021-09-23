@@ -11,6 +11,7 @@ import CoreLocation
 protocol SettingsDataPass{
     func changeBackgroundColor(color: UIColor) -> ()
     func printLocation(coord: CLLocationCoordinate2D) -> ()
+    func eraseLocation() -> ()
 }
 
 class ViewController: UIViewController {
@@ -24,6 +25,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
         setupLocationTextView()
         setupSettingsView()
@@ -43,6 +46,7 @@ class ViewController: UIViewController {
                 let settingsViewController = SettingsViewController()
                 settingsViewController.settingColorDelegate = changeBackgroundColor
                 settingsViewController.settingLocationDelegate = printLocation
+                settingsViewController.erasingLocationDelegate = eraseLocation
                 
                 navigationController?.pushViewController(
                     settingsViewController,
@@ -52,6 +56,7 @@ class ViewController: UIViewController {
                 let settingsViewController = SettingsViewController()
                 settingsViewController.settingColorDelegate = changeBackgroundColor
                 settingsViewController.settingLocationDelegate = printLocation
+                settingsViewController.erasingLocationDelegate = eraseLocation
                 
                 present(settingsViewController, animated: true, completion: nil)
             default:
@@ -70,35 +75,23 @@ class ViewController: UIViewController {
             let view = UIView()
             settingsView.addArrangedSubview(view)
             view.translatesAutoresizingMaskIntoConstraints = false
-            view.leadingAnchor.constraint(
-                equalTo: settingsView.leadingAnchor,
-                constant: 10
-            ).isActive = true
-            view.trailingAnchor.constraint(
-                equalTo: settingsView.trailingAnchor,
-                constant: -10
-            ).isActive = true
-            view.topAnchor.constraint(
-                equalTo: settingsView.topAnchor,
-                constant: CGFloat(top)
-            ).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            
+            view.pinLeft(to: settingsView.leadingAnchor, 10)
+            view.pinRight(to: settingsView.trailingAnchor, 10)
+            view.pinTop(to: settingsView.topAnchor, Double(top))
+            
+            view.setHeight(to: 30)
             top += 40
 
             let label = UILabel()
             view.addSubview(label)
             label.text = colors[i]
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: 5
-            ).isActive = true
-            label.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor
-            ).isActive = true
-            label.widthAnchor.constraint(
-                equalToConstant: 50
-            ).isActive = true
+            
+            label.pinTop(to: view.topAnchor, 5)
+            label.pinLeft(to: view.leadingAnchor)
+            
+            label.setWidth(to: 50)
 
             let slider = sliders[i]
             slider.translatesAutoresizingMaskIntoConstraints = false
@@ -108,14 +101,12 @@ class ViewController: UIViewController {
                              action: #selector(sliderChangedValue),
                              for: .valueChanged)
             view.addSubview(slider)
-            slider.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: 5).isActive = true
-            slider.heightAnchor.constraint(equalToConstant: 20).isActive = true
-            slider.leadingAnchor.constraint(
-                equalTo:
-                label.trailingAnchor, constant: 10).isActive = true
-            slider.trailingAnchor.constraint(equalTo:view.trailingAnchor).isActive = true
+            
+            slider.pinTop(to: view.topAnchor, 5)
+            slider.pinLeft(to: label.trailingAnchor, 10)
+            slider.pinRight(to: view.trailingAnchor)
+            
+            slider.setHeight(to: 20)
         }
      }
     
@@ -132,29 +123,17 @@ class ViewController: UIViewController {
         locationLabel.text = "Location"
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        locationLabel.topAnchor.constraint(
-            equalTo: settingsView.topAnchor,
-            constant: 10
-        ).isActive = true
-        
-        locationLabel.leadingAnchor.constraint(
-            equalTo: settingsView.leadingAnchor,
-            constant: 10
-        ).isActive = true
+        locationLabel.pinTop(to: settingsView.topAnchor, 10)
+        locationLabel.pinLeft(to: settingsView.leadingAnchor, 10)
+        locationLabel.pinRight(to: settingsView.trailingAnchor, -10)
         
         let locationToggle = UISwitch()
         settingsView.addArrangedSubview(locationToggle)
 
         locationToggle.translatesAutoresizingMaskIntoConstraints = false
-        locationToggle.topAnchor.constraint(
-            equalTo: settingsView.topAnchor,
-            constant: 60
-        ).isActive = true
         
-        locationToggle.trailingAnchor.constraint(
-            equalTo: settingsView.trailingAnchor,
-            constant: -10
-        ).isActive = true
+        locationToggle.pinTop(to: settingsView.topAnchor, 50)
+        locationToggle.pinRight(to: settingsView.trailingAnchor, -10)
         
         locationToggle.addTarget(
             self,
@@ -170,21 +149,14 @@ class ViewController: UIViewController {
         locationTextView.layer.cornerRadius = 20
         locationTextView.translatesAutoresizingMaskIntoConstraints = false
         
-        locationTextView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 60
-        ).isActive = true
+        locationTextView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 60)
         
         locationTextView.centerXAnchor.constraint(
             equalTo: view.centerXAnchor
         ).isActive = true
         
-        locationTextView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        
-        locationTextView.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 15
-        ).isActive = true
+        locationTextView.setHeight(to: 300)
+        locationTextView.pinLeft(to: view.leadingAnchor, 15)
         
         locationTextView.isUserInteractionEnabled = false
      }
@@ -196,17 +168,10 @@ class ViewController: UIViewController {
          setView.backgroundColor = .systemGray4
          setView.alpha = 0
         
-         setView.topAnchor.constraint(
-         equalTo: view.safeAreaLayoutGuide.topAnchor,
-         constant: 10
-         ).isActive = true
-        
-         setView.trailingAnchor.constraint(
-         equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-         constant: -10
-         ).isActive = true
-        
-         setView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+         setView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 10)
+         setView.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, -10)
+       
+         setView.setHeight(to: 300)
          setView.widthAnchor.constraint(
          equalTo: setView.heightAnchor,
          multiplier: 2/3
@@ -215,12 +180,11 @@ class ViewController: UIViewController {
          setView.addSubview(settingsView)
          settingsView.axis = .vertical
          settingsView.translatesAutoresizingMaskIntoConstraints = false
-         settingsView.topAnchor.constraint(
-            equalTo: setView.topAnchor).isActive = true
-         settingsView.trailingAnchor.constraint(
-            equalTo: setView.trailingAnchor).isActive = true
-         settingsView.leadingAnchor.constraint(
-            equalTo: setView.leadingAnchor).isActive = true
+        
+        
+         settingsView.pinTop(to: setView.topAnchor)
+         settingsView.pinLeft(to: setView.leadingAnchor)
+         settingsView.pinRight(to: setView.trailingAnchor)
     }
     
     private func setupSettingsButton()
@@ -232,20 +196,13 @@ class ViewController: UIViewController {
         
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         
-        settingsButton.topAnchor.constraint(
-         equalTo: view.safeAreaLayoutGuide.topAnchor,
-         constant: 15
-         ).isActive = true
+        settingsButton.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 15)
+        settingsButton.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, 15)
         
-        settingsButton.trailingAnchor.constraint(
-         equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-         constant: -15
-         ).isActive = true
-        
-        settingsButton.heightAnchor.constraint(equalToConstant: 30).isActive
-        = true
-         settingsButton.widthAnchor.constraint(equalTo:
-        settingsButton.heightAnchor).isActive = true
+        settingsButton.setHeight(to: 30)
+        settingsButton.widthAnchor.constraint(
+            equalTo: settingsButton.heightAnchor
+        ).isActive = true
         
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed),
         for: .touchUpInside)
@@ -286,6 +243,10 @@ extension ViewController: SettingsDataPass{
     
     func printLocation(coord: CLLocationCoordinate2D) {
         locationTextView.text = "Coordinates = \(coord.latitude) \(coord.longitude)"
+    }
+    
+    func eraseLocation() {
+        locationTextView.text = "";
     }
 }
 
